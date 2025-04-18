@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Catalog</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="top-banner">
+            For free shipping on orders over $100 and more use code FREESHIPPINGYAY
+        </div>
+        <div class="nav-container">
+            <div class="logo">
+                <a href="index.html">Phone Store</a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="catalog.html">Catalog</a></li>
+                    <li><a href="compare.html">Compare</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search by brand, model or description...">
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">Home</a> &gt;
+            <span class="current-page">All Products</span>
+        </nav>
+
+        <section class="filters">
+            <button class="filter-button" data-filter="new">New Arrivals</button>
+            <button class="filter-button" data-filter="latest">Latest First</button>
+            <button class="filter-button" data-filter="price-low">Price: Low to High</button>
+            <button class="filter-button" data-filter="price-high">Price: High to Low</button>
+        </section>
+
+        <section class="phones-grid">
+            <!-- Phones will be dynamically inserted here -->
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Help</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Customer service</a></li>
+                    <li><a href="#">How to guides</a></li>
+                    <li><a href="#">Contact us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Other</h3>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Sitemap</a></li>
+                    <li><a href="#">Subscriptions</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Let's stay in touch! Sign up to our newsletter and get the best deals!</p>
+            </div>
+        </div>
+        <p>&copy; 2024 Phone Store. All rights reserved.</p>
+    </footer>
+
+    <script src="/js/script.js"></script>
+</body>
+</html> 
