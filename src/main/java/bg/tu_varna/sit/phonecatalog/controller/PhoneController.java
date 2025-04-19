@@ -7,6 +7,7 @@ import bg.tu_varna.sit.phonecatalog.database.entities.PhoneEntity;
 import bg.tu_varna.sit.phonecatalog.services.CreatePhoneService;
 import bg.tu_varna.sit.phonecatalog.services.FindPhoneService;
 import bg.tu_varna.sit.phonecatalog.services.GetAllPhonesService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class PhoneController {
     }
 
     @GetMapping
-//    @Operation(description = "Gets all phones")
+    @Operation(description = "Gets all phones")
     public ResponseEntity<List<PhoneEntity>> getAllPhones() {
         GetAllPhonesInput input = GetAllPhonesInput.builder()
                 .build();
@@ -37,7 +38,7 @@ public class PhoneController {
     }
 
     @GetMapping("/{id}")
-//    @Operation(description = "Finds phone by id")
+    @Operation(description = "Finds phone by id")
     public ResponseEntity<PhoneEntity> getPhoneById(@PathVariable UUID id) {
         FindPhoneInput input = FindPhoneInput.builder()
                 .id(id)
@@ -46,7 +47,7 @@ public class PhoneController {
     }
 
     @PostMapping("/create")
-//    @Operation(description = "Creates phones")
+    @Operation(description = "Creates phones")
     public ResponseEntity<?> createPhone(@RequestBody CreatePhoneInput input) {
         return ResponseEntity.ok(createPhoneService.process(input));
     }

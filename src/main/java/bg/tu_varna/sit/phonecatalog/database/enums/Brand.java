@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Brand {
-    APPLE("Apple"),SAMSUNG("Samsung"),XIAOMI("XiaoMi"),HUAWEI("Huawei"),LG("LG"),
+    APPLE("Apple iPhone"),SAMSUNG("Samsung"),XIAOMI("XiaoMi"),HUAWEI("Huawei"),LG("LG"),
     HTC("HTC"),UNKNOWN("Unknown");
     private final String value;
     private static final Map<String, Brand> map = new HashMap<>();
