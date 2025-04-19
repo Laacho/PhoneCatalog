@@ -1,4 +1,4 @@
-package bg.tu_varna.sit.phonecatalog.api.model.get;
+package bg.tu_varna.sit.phonecatalog.api.model.compare;
 
 import bg.tu_varna.sit.phonecatalog.api.base.ModelOutput;
 import bg.tu_varna.sit.phonecatalog.database.entities.PhoneEntity;
@@ -12,6 +12,6 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class GetAllPhonesOutput implements ModelOutput {
-    private List<PhoneEntity> phones;
+public class ComparePhonesOutput implements ModelOutput {
+    private List<PhoneEntity> pair;
 }

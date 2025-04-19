@@ -21,33 +21,33 @@ import java.util.UUID;
 public class PhoneEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "phone_id",nullable = false,updatable = false)
+    @Column(name = "phone_id", nullable = false, updatable = false)
     private UUID uuid;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "brand",nullable = false)
+    @Column(name = "brand", nullable = false)
     private Brand brand;
 
-    @Column(name = "model",nullable = false)
+    @Column(name = "model", nullable = false)
     private String model;
 
-    @Column(name = "publish_date",nullable = false)
+    @Column(name = "publish_date", nullable = false)
     private LocalDate publishDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "operation_system",nullable = false)
+    @Column(name = "operation_system", nullable = false)
     private OperationSystem operationSystem;
 
-    @Column(name = "version",nullable = false)
+    @Column(name = "version", nullable = false)
     private String version;
 
-    @Column(name = "description",nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "price",nullable = false)
+    @Column(name = "price", nullable = false)
     private BigDecimal startingPrice;
 
-    @Column(name = "image_url",nullable = false)
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
     @ManyToMany(fetch = FetchType.EAGER)
