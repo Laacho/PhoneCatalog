@@ -1,4 +1,4 @@
-package bg.tu_varna.sit.phonecatalog.api.model.find;
+package bg.tu_varna.sit.phonecatalog.api.model.compare;
 
 import bg.tu_varna.sit.phonecatalog.api.base.ModelInput;
 import lombok.*;
@@ -11,6 +11,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @EqualsAndHashCode
-public class FindPhoneInput implements ModelInput{
-    private UUID id;
+public class ComparePhonesInput implements ModelInput {
+    private UUID firstPhone;
+    private UUID secondPhone;
 }

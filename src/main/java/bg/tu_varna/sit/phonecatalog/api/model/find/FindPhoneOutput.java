@@ -4,7 +4,6 @@ import bg.tu_varna.sit.phonecatalog.api.base.ModelOutput;
 import bg.tu_varna.sit.phonecatalog.database.entities.PhoneEntity;
 import lombok.*;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)

@@ -1,5 +1,7 @@
 package bg.tu_varna.sit.phonecatalog.controller;
 
+import bg.tu_varna.sit.phonecatalog.api.model.compare.ComparePhonesInput;
+import bg.tu_varna.sit.phonecatalog.api.model.compare.ComparePhonesProcess;
 import bg.tu_varna.sit.phonecatalog.api.model.create.CreatePhoneInput;
 import bg.tu_varna.sit.phonecatalog.api.model.find.FindPhoneInput;
 import bg.tu_varna.sit.phonecatalog.api.model.get.GetAllPhonesInput;
@@ -21,12 +23,15 @@ public class PhoneController {
     private final GetAllPhonesService getAllPhonesService;
     private final FindPhoneService findPhoneService;
     private final CreatePhoneService createPhoneService;
+    private final ComparePhonesProcess comparePhonesProcess;
+
     @Autowired
-    public PhoneController(GetAllPhonesService getAllPhonesService, FindPhoneService findPhoneService, CreatePhoneService createPhoneService) {
+    public PhoneController(GetAllPhonesService getAllPhonesService, FindPhoneService findPhoneService, CreatePhoneService createPhoneService, ComparePhonesProcess comparePhonesProcess) {
 
         this.getAllPhonesService = getAllPhonesService;
         this.findPhoneService = findPhoneService;
         this.createPhoneService = createPhoneService;
+        this.comparePhonesProcess = comparePhonesProcess;
     }
 
     @GetMapping
@@ -50,6 +55,16 @@ public class PhoneController {
     @Operation(description = "Creates phones")
     public ResponseEntity<?> createPhone(@RequestBody CreatePhoneInput input) {
         return ResponseEntity.ok(createPhoneService.process(input));
+    }
+
+    @GetMapping("/compare/{firstId}/{secondId}")
+    @Operation(description = "Compares two phones by their ID, returns list which will later be processed by JS")
+    public ResponseEntity<List<PhoneEntity>> comparePhones(@PathVariable UUID firstId, @PathVariable UUID secondId) {
+        ComparePhonesInput input = ComparePhonesInput.builder()
+                .firstPhone(firstId)
+                .secondPhone(secondId)
+                .build();
+        return ResponseEntity.ok(comparePhonesProcess.process(input).getPair());
     }
 
 }

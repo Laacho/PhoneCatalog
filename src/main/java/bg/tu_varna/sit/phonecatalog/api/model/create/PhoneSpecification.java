@@ -2,7 +2,6 @@ package bg.tu_varna.sit.phonecatalog.api.model.create;
 
 import lombok.*;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder(toBuilder = true)

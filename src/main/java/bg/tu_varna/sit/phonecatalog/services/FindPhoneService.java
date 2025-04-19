@@ -16,7 +16,7 @@ public class FindPhoneService implements FindPhoneProcess {
     @Override
     public FindPhoneOutput process(FindPhoneInput model) {
         PhoneEntity phoneEntity = phoneRepository.findById(model.getId())
-                .orElseThrow(()->new RuntimeException("No phone was found"));
+                .orElseThrow(() -> new RuntimeException("No phone was found"));
         return FindPhoneOutput
                 .builder()
                 .phone(phoneEntity)
