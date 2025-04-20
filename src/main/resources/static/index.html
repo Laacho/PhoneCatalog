@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Phone Catalog - Home</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Phone Store - Your Ultimate Phone Destination</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/index-styles.css">
 </head>
 <body>
     <header>
@@ -12,7 +13,9 @@
             For free shipping on orders over $100 and more use code FREESHIPPINGYAY
         </div>
         <div class="nav-container">
-            <div class="logo">Logo</div>
+            <div class="logo">
+                <a href="index.html">Phone Store</a>
+            </div>
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -21,56 +24,42 @@
                     <li><a href="#">About</a></li>
                 </ul>
             </nav>
-            <input type="search" class="search-bar" placeholder="Search product">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search by brand, model or description...">
+            </div>
         </div>
     </header>
 
     <main>
-        <section class="hero">
-            <div class="container">
-                <h1>Phone catalog</h1>
-                <p>Explore the latest smartphones and top brands in one place.
-                    Compare features, prices, and find the perfect phone for you – fast and easy!</p>
+        <section class="hero-section">
+            <div class="hero-content" >
+                <h1>Find Your Perfect Phone</h1>
+                <p>Compare the latest smartphones and discover the perfect match for your needs</p>
+            </div>
+        </section>
+
+        <section class="logo-section">
+            <div class="brand-logos">
+                <img src="/images/headphoto.jpg" alt="Phone Brands" class="brand-logo">
             </div>
         </section>
 
         <section class="popular-phones-section">
             <h2>Popular Phones</h2>
-            <div class="popular-phones-grid"></div> <!-- new container here -->
-        </section>
-
-
-        <section class="container">
-            <h2>Trade your phone</h2>
-            <div class="trade-section">
-                <p>Join our yearly subscription and save 40%! Also, get one extra tea as a bonus. No strings attached, simple one-click cancellation.</p>
-                <div class="trade-images">
-                    <div class="old-phone">Old phone</div>
-                    <div class="trade-arrow">→</div>
-                    <div class="new-phone">New phone</div>
-                </div>
-                <button class="coming-soon">Coming soon</button>
+            <div class="popular-phones-grid">
+                <!-- Phones will be dynamically inserted here by script.js -->
             </div>
         </section>
 
-        <section class="container">
-            <h2>View world bestsellers</h2>
-            <div class="bestsellers">
-                <div class="phone-card">
-                    <img src="https://placehold.co/400x400?text=Flagship" alt="Flagship Phone" class="phone-image">
-                    <div class="phone-info">
-                        <h3>Flagship Phone</h3>
-                        <p>Some text</p>
-                        <div class="price">$1000</div>
-                    </div>
+        <section class="trade-section">
+            <div class="trade-container">
+                <div class="trade-content">
+                    <h2>Trade In Your Phone</h2>
+                    <p>Get the best value for your old phone and upgrade to the latest model. Our trade-in program makes it easy and convenient to switch to a new device.</p>
+                    <a href="#" class="trade-button">Learn More</a>
                 </div>
-                <div class="phone-card">
-                    <img src="https://placehold.co/400x400?text=Budget" alt="Budget Phone" class="phone-image">
-                    <div class="phone-info">
-                        <h3>Budget Phone</h3>
-                        <p>Some text</p>
-                        <div class="price">$500</div>
-                    </div>
+                <div class="trade-image-container">
+                    <img src="/images/trade.png" alt="Trade In Your Phone" class="trade-image">
                 </div>
             </div>
         </section>
@@ -100,7 +89,9 @@
                 <p>Let's stay in touch! Sign up to our newsletter and get the best deals!</p>
             </div>
         </div>
+        <p>&copy; 2024 Phone Store. All rights reserved.</p>
     </footer>
 
+    <script src="js/script.js"></script>
 </body>
 </html>
