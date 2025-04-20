@@ -4,7 +4,7 @@ const phone2Select = document.getElementById('phone2');
 const comparisonResult = document.getElementById('comparison-result');
 
 // API endpoints
-const API_BASE_URL = 'http://localhost:8081/api';
+const API_BASE_URL = 'http://localhost:8081/api/v1/phones';
 
 // Comparison metrics and their weights (for overall score)
 const comparisonMetrics = {
@@ -63,40 +63,41 @@ const comparisonMetrics = {
 // Initialize phone selectors
 async function initializeSelectors() {
     try {
-        const response = await fetch(`${API_BASE_URL}/phones`);
+        const response = await fetch(API_BASE_URL);
         if (!response.ok) throw new Error('Failed to fetch phones');
         const phones = await response.json();
         
         const options = phones.map(phone => 
-            `<option value="${phone.id}">${phone.name}</option>`
+            `<option value="${phone.uuid}">${phone.brand} ${phone.model}</option>`
         ).join('');
         
-        phone1Select.innerHTML += options;
-        phone2Select.innerHTML += options;
+        phone1Select.innerHTML = '<option value="">Select first phone</option>' + options;
+        phone2Select.innerHTML = '<option value="">Select second phone</option>' + options;
     } catch (error) {
         console.error('Error initializing selectors:', error);
+        comparisonResult.innerHTML = '<p class="error-message">Error loading phones. Please try again later.</p>';
     }
 }
 
 // Compare phones when both are selected
 async function comparePhones() {
-    const phone1Id = parseInt(phone1Select.value);
-    const phone2Id = parseInt(phone2Select.value);
+    const phone1Id = phone1Select.value;
+    const phone2Id = phone2Select.value;
     
     if (!phone1Id || !phone2Id || phone1Id === phone2Id) {
-        comparisonResult.innerHTML = '<p>Please select two different phones to compare.</p>';
+        comparisonResult.innerHTML = '<p class="error-message">Please select two different phones to compare.</p>';
         return;
     }
     
     try {
-        const response = await fetch(`${API_BASE_URL}/phones/compare?phone1Id=${phone1Id}&phone2Id=${phone2Id}`);
+        const response = await fetch(`${API_BASE_URL}/compare/${phone1Id}/${phone2Id}`);
         if (!response.ok) throw new Error('Failed to fetch comparison data');
-        const [phone1, phone2] = await response.json();
+        const phones = await response.json();
         
-        displayComparison(phone1, phone2);
+        displayComparison(phones[0], phones[1]);
     } catch (error) {
         console.error('Error comparing phones:', error);
-        comparisonResult.innerHTML = '<p>Error loading comparison data. Please try again.</p>';
+        comparisonResult.innerHTML = '<p class="error-message">Error loading comparison data. Please try again.</p>';
     }
 }
 
@@ -105,79 +106,54 @@ function displayComparison(phone1, phone2) {
     let comparisonHTML = `
         <div class="comparison-container">
             <div class="phone1">
-                <img src="${phone1.image}" alt="${phone1.name}" class="phone-image">
-                <h2>${phone1.name}</h2>
-                <div class="rating">
-                    <div class="stars">${'★'.repeat(Math.floor(phone1.score))}${'☆'.repeat(5-Math.floor(phone1.score))}</div>
-                    <span>${phone1.score} (${phone1.reviews} reviews)</span>
+                <div class="phone-image-container">
+                    <img src="${phone1.imageUrl || 'https://placehold.co/400x400?text=No+Image'}" 
+                         alt="${phone1.brand} ${phone1.model}" 
+                         class="phone-image">
                 </div>
-                <p class="price">$${phone1.price}</p>
+                <h2>${phone1.brand} ${phone1.model}</h2>
+                <p class="price">Starting from $${phone1.startingPrice ? Number(phone1.startingPrice).toFixed(2) : '0.00'}</p>
+                <div class="os-badge">${phone1.operationSystem} ${phone1.version}</div>
             </div>
             <div class="phone2">
-                <img src="${phone2.image}" alt="${phone2.name}" class="phone-image">
-                <h2>${phone2.name}</h2>
-                <div class="rating">
-                    <div class="stars">${'★'.repeat(Math.floor(phone2.score))}${'☆'.repeat(5-Math.floor(phone2.score))}</div>
-                    <span>${phone2.score} (${phone2.reviews} reviews)</span>
+                <div class="phone-image-container">
+                    <img src="${phone2.imageUrl || 'https://placehold.co/400x400?text=No+Image'}" 
+                         alt="${phone2.brand} ${phone2.model}" 
+                         class="phone-image">
                 </div>
-                <p class="price">$${phone2.price}</p>
+                <h2>${phone2.brand} ${phone2.model}</h2>
+                <p class="price">Starting from $${phone2.startingPrice ? Number(phone2.startingPrice).toFixed(2) : '0.00'}</p>
+                <div class="os-badge">${phone2.operationSystem} ${phone2.version}</div>
             </div>
         </div>
         
         <table class="comparison-table">
             <tr>
                 <th>Feature</th>
-                <th>${phone1.name}</th>
-                <th>${phone2.name}</th>
+                <th>${phone1.brand} ${phone1.model}</th>
+                <th>${phone2.brand} ${phone2.model}</th>
                 <th>Winner</th>
             </tr>
     `;
 
-    // Compare each specification
-    phone1.specs.forEach(spec => {
-        const spec2 = phone2.specs.find(s => s.name === spec.name);
-        if (!spec2) return;
+    // Compare specifications
+    if (phone1.specifications && phone2.specifications) {
+        phone1.specifications.forEach(spec1 => {
+            const spec2 = phone2.specifications.find(s => s.name === spec1.name);
+            if (!spec2) return;
 
-        const metric = comparisonMetrics[spec.name.toLowerCase()];
-        if (!metric) return;
+            comparisonHTML += `
+                <tr>
+                    <td class="comparison-category">${spec1.name}</td>
+                    <td>${spec1.description}</td>
+                    <td>${spec2.description}</td>
+                    <td>${spec1.description === spec2.description ? 'Equal' : 'Varies'}</td>
+                </tr>
+            `;
+        });
+    }
 
-        const comparison = metric.compare(spec.description, spec2.description);
-        const winner = comparison.winner;
-
-        comparisonHTML += `
-            <tr>
-                <td class="comparison-category">${spec.name}</td>
-                <td class="${winner === 1 ? 'highlight' : ''}">${spec.description}
-                    ${winner === 1 ? '<div class="feature-better">Better</div>' : 
-                      winner === 2 ? '<div class="feature-worse">Lower</div>' : 
-                      '<div class="feature-equal">Equal</div>'}
-                </td>
-                <td class="${winner === 2 ? 'highlight' : ''}">${spec2.description}
-                    ${winner === 2 ? '<div class="feature-better">Better</div>' : 
-                      winner === 1 ? '<div class="feature-worse">Lower</div>' : 
-                      '<div class="feature-equal">Equal</div>'}
-                </td>
-                <td>
-                    ${winner === 0 ? 'Equal' : 
-                      `${winner === 1 ? phone1.name : phone2.name}`}
-                    ${comparison.difference ? `<div class="difference">${comparison.difference}</div>` : ''}
-                </td>
-            </tr>
-        `;
-    });
-
-    // Add overall comparison
-    const overallComparison = compareOverall(phone1, phone2);
-    comparisonHTML += `
-        <tr>
-            <td colspan="4" class="overall-winner">
-                <h3>Overall Winner: ${overallComparison.winner}</h3>
-                <p>${overallComparison.reason}</p>
-            </td>
-        </tr>
-        </table>
-    `;
-
+    comparisonHTML += `</table>`;
     comparisonResult.innerHTML = comparisonHTML;
 }
 
@@ -229,9 +205,9 @@ function compareOverall(phone1, phone2) {
     }
 }
 
-// Event listeners
+// Add event listeners
 phone1Select.addEventListener('change', comparePhones);
 phone2Select.addEventListener('change', comparePhones);
 
 // Initialize the page
-document.addEventListener('DOMContentLoaded', initializeSelectors); 
+document.addEventListener('DOMContentLoaded', initializeSelectors);

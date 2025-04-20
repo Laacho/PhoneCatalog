@@ -72,12 +72,14 @@ function displayPhones(phonesToShow) {
         phonesGrid.innerHTML = '<p class="no-phones">No phones available</p>';
         return;
     }
-    
+
     phonesGrid.innerHTML = phonesToShow.map(phone => `
         <div class="phone-card">
-            <img src="${phone.imageUrl || 'https://placehold.co/400x400?text=No+Image'}" 
-                 alt="${phone.brand} ${phone.model}" 
-                 class="phone-image">
+            <div class="phone-image-container">
+                <img src="${phone.imageUrl || 'https://placehold.co/400x400?text=No+Image'}" 
+                     alt="${phone.brand} ${phone.model}" 
+                     class="phone-image">
+            </div>
             <div class="phone-info">
                 <h3>${phone.brand} ${phone.model}</h3>
                 <p>${phone.description || 'No description available'}</p>
@@ -203,7 +205,7 @@ function displayPopularPhones() {
     const popularPhones = phones
         .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate))
         .slice(0, 3);
-    
+
     const popularPhonesGrid = document.querySelector('.phones-grid');
     if (popularPhonesGrid) {
         displayPhones(popularPhones);
@@ -236,4 +238,4 @@ function setupFilters() {
             displayPhones(filteredPhones);
         });
     });
-} 
+}

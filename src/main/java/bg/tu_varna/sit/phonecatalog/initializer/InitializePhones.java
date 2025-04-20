@@ -62,7 +62,7 @@ public class InitializePhones implements ApplicationRunner {
                     .description("Introduction to Apple Intelligence")
                     .imageUrl("https://pngimg.com/d/iphone16_PNG38.png")
                     .operationSystem(OperationSystem.IOS)
-                    .version("iOS 18.4")
+                    .version("18.4")
                     .publishDate(LocalDate.of(2024, 9, 9))
                     .startingPrice(BigDecimal.valueOf(1199L))
                     .specifications(specs2)

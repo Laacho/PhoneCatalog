@@ -79,6 +79,68 @@
         .feature-equal {
             color: #6c757d;
         }
+
+        .search-container {
+            position: relative;
+            flex: 0 1 400px;
+        }
+        
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+        
+        .search-results.active {
+            display: block;
+        }
+        
+        .search-result-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .search-result-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .search-result-item img {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+        
+        .search-result-item .phone-info {
+            flex: 1;
+        }
+        
+        .search-result-item h4 {
+            margin: 0;
+            font-size: 0.9em;
+            color: #333;
+        }
+        
+        .search-result-item p {
+            margin: 0;
+            font-size: 0.8em;
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -87,7 +149,9 @@
             For free shipping on orders over $100 and more use code FREESHIPPINGYAY
         </div>
         <div class="nav-container">
-            <div class="logo">Logo</div>
+            <div class="logo">
+                <a href="index.html">Phone Store</a>
+            </div>
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
@@ -96,7 +160,12 @@
                     <li><a href="#">About</a></li>
                 </ul>
             </nav>
-            <input type="search" class="search-bar" placeholder="Search product">
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Search by brand, model or description...">
+                <div class="search-results" id="searchResults">
+                    <!-- Search results will be dynamically inserted here -->
+                </div>
+            </div>
         </div>
     </header>
 
@@ -116,6 +185,7 @@
         </div>
 
         <div id="comparison-result">
+            <!-- Comparison results will be displayed here -->
         </div>
     </main>
 
@@ -143,7 +213,85 @@
                 <p>Let's stay in touch! Sign up to our newsletter and get the best deals!</p>
             </div>
         </div>
+        <p>&copy; 2024 Phone Store. All rights reserved.</p>
     </footer>
 
+    <script src="js/compare.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Search functionality
+            const searchBar = document.querySelector('.search-bar');
+            const searchResults = document.getElementById('searchResults');
+            let phones = [];
+
+            // Fetch all phones when page loads
+            fetch('/api/v1/phones')
+                .then(response => response.json())
+                .then(data => {
+                    phones = data;
+                    // Populate phone selectors
+                    const phone1Select = document.getElementById('phone1');
+                    const phone2Select = document.getElementById('phone2');
+                    
+                    data.forEach(phone => {
+                        const option1 = document.createElement('option');
+                        option1.value = phone.uuid;
+                        option1.textContent = `${phone.brand} ${phone.model}`;
+                        
+                        const option2 = document.createElement('option');
+                        option2.value = phone.uuid;
+                        option2.textContent = `${phone.brand} ${phone.model}`;
+                        
+                        phone1Select.appendChild(option1);
+                        phone2Select.appendChild(option2);
+                    });
+                })
+                .catch(error => console.error('Error fetching phones:', error));
+
+            // Search handler
+            searchBar.addEventListener('input', function(e) {
+                const searchTerm = e.target.value.toLowerCase().trim();
+                searchResults.innerHTML = '';
+                
+                if (searchTerm.length < 2) {
+                    searchResults.classList.remove('active');
+                    return;
+                }
+
+                const matches = phones.filter(phone => {
+                    const searchString = `${phone.brand} ${phone.model} ${phone.description}`.toLowerCase();
+                    return searchString.includes(searchTerm);
+                }).slice(0, 3);
+
+                if (matches.length > 0) {
+                    matches.forEach(phone => {
+                        const resultItem = document.createElement('div');
+                        resultItem.className = 'search-result-item';
+                        resultItem.innerHTML = `
+                            <img src="${phone.imageUrl}" alt="${phone.brand} ${phone.model}">
+                            <div class="phone-info">
+                                <h4>${phone.brand} ${phone.model}</h4>
+                                <p>$${phone.startingPrice}</p>
+                            </div>
+                        `;
+                        resultItem.addEventListener('click', () => {
+                            window.location.href = `product.html?id=${phone.uuid}`;
+                        });
+                        searchResults.appendChild(resultItem);
+                    });
+                    searchResults.classList.add('active');
+                } else {
+                    searchResults.classList.remove('active');
+                }
+            });
+
+            // Close search results when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!searchBar.contains(e.target)) {
+                    searchResults.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html> 

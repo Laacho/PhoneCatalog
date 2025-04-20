@@ -1,0 +1,166 @@
+/* Index Page Specific Styles */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #666;
+    --accent-color: #3498db;
+    --background-color: #f8f9fa;
+    --border-color: #dee2e6;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 600px;
+    background-image: url('../images/headphoto.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+}
+
+.hero-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    max-width: 600px;
+}
+
+/* Popular Phones Section */
+.popular-phones-section {
+    padding: 4rem 0;
+    background-color: white;
+}
+
+.popular-phones-section h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+}
+
+.popular-phones-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Trade Section */
+.trade-section {
+    background-color: var(--background-color);
+    padding: 4rem 0;
+}
+
+.trade-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.trade-content {
+    padding-right: 2rem;
+}
+
+.trade-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+}
+
+.trade-content p {
+    font-size: 1.2rem;
+    color: var(--secondary-color);
+    margin-bottom: 2rem;
+}
+
+.trade-image {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.trade-button {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: var(--accent-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.trade-button:hover {
+    background-color: #2980b9;
+}
+
+/* Logo Section */
+.logo-section {
+    padding: 2rem 0;
+    background-color: white;
+    text-align: center;
+}
+
+.brand-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.brand-logo {
+    max-width: 150px;
+    height: auto;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.brand-logo:hover {
+    opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .hero-content p {
+        font-size: 1.2rem;
+    }
+
+    .trade-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .trade-content {
+        padding-right: 0;
+    }
+
+    .brand-logos {
+        flex-wrap: wrap;
+        gap: 2rem;
+    }
+} 
