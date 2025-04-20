@@ -72,7 +72,7 @@ function displayPhones(phonesToShow) {
         phonesGrid.innerHTML = '<p class="no-phones">No phones available</p>';
         return;
     }
-    
+
     phonesGrid.innerHTML = phonesToShow.map(phone => `
         <div class="phone-card">
             <img src="${phone.imageUrl || 'https://placehold.co/400x400?text=No+Image'}" 
@@ -203,7 +203,7 @@ function displayPopularPhones() {
     const popularPhones = phones
         .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate))
         .slice(0, 3);
-    
+
     const popularPhonesGrid = document.querySelector('.phones-grid');
     if (popularPhonesGrid) {
         displayPhones(popularPhones);
@@ -236,4 +236,4 @@ function setupFilters() {
             displayPhones(filteredPhones);
         });
     });
-} 
+}

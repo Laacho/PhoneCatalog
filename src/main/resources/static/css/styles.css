@@ -495,4 +495,37 @@ footer {
     .breadcrumb {
         text-align: center;
     }
-} 
+}
+.phone-card {
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center; /* <-- THIS centers the text and button */
+    width: 250px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.phone-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.phone-card h3 {
+    margin: 0.5rem 0;
+}
+
+.view-details {
+    margin-top: 0.5rem;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.view-details:hover {
+    background-color: #0056b3;
+}
