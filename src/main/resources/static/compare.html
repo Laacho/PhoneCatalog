@@ -233,16 +233,20 @@
                     const phone1Select = document.getElementById('phone1');
                     const phone2Select = document.getElementById('phone2');
                     
+                    // Clear existing options except the first one
+                    while (phone1Select.options.length > 1) phone1Select.remove(1);
+                    while (phone2Select.options.length > 1) phone2Select.remove(1);
+                    
+                    // Add phones to both dropdowns
                     data.forEach(phone => {
                         const option1 = document.createElement('option');
                         option1.value = phone.uuid;
                         option1.textContent = `${phone.brand} ${phone.model}`;
+                        phone1Select.appendChild(option1);
                         
                         const option2 = document.createElement('option');
                         option2.value = phone.uuid;
                         option2.textContent = `${phone.brand} ${phone.model}`;
-                        
-                        phone1Select.appendChild(option1);
                         phone2Select.appendChild(option2);
                     });
                 })
