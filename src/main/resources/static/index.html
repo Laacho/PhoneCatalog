@@ -6,6 +6,145 @@
     <title>Phone Store - Your Ultimate Phone Destination</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/index-styles.css">
+    <style>
+        .hero-section {
+            background-image: url('/images/headphoto.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            position: relative;
+        }
+        .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .popular-phones-section {
+            padding: 40px 0;
+            background-color: #f8f9fa;
+            width: 100%;
+        }
+        .popular-phones-section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 2em;
+        }
+        .popular-phones-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            padding: 0 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .popular-phones-grid .phone-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .popular-phones-grid .phone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .popular-phones-grid .phone-card img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .popular-phones-grid .phone-card h3 {
+            margin: 10px 0;
+            color: #333;
+            font-size: 1.2em;
+        }
+        .popular-phones-grid .phone-card p {
+            color: #666;
+            font-size: 1.1em;
+            margin: 0;
+        }
+        .trade-section {
+            background-image: url('/images/trade.png');
+            background-size: cover;
+            background-position: center;
+            padding: 60px 0;
+            position: relative;
+        }
+        .trade-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .trade-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px;
+            position: relative;
+            z-index: 1;
+        }
+        .trade-content {
+            flex: 1;
+            color: white;
+        }
+        .trade-content h2 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .trade-content p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        .trade-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .trade-button:hover {
+            background-color: #0056b3;
+        }
+        .trade-image-container {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,6 +153,7 @@
         </div>
         <div class="nav-container">
             <div class="logo">
+                <img src="/images/logo.png" alt="Phone Store Logo">
                 <a href="index.html">Phone Store</a>
             </div>
             <nav>
@@ -32,22 +172,15 @@
 
     <main>
         <section class="hero-section">
-            <div class="hero-content" >
+            <div class="hero-content">
                 <h1>Find Your Perfect Phone</h1>
                 <p>Compare the latest smartphones and discover the perfect match for your needs</p>
             </div>
         </section>
-
-        <section class="logo-section">
-            <div class="brand-logos">
-                <img src="/images/headphoto.jpg" alt="Phone Brands" class="brand-logo">
-            </div>
-        </section>
-
         <section class="popular-phones-section">
             <h2>Popular Phones</h2>
-            <div class="popular-phones-grid">
-                <!-- Phones will be dynamically inserted here by script.js -->
+            <div class="popular-phones-grid" id="popularPhones">
+                <!-- Phones will be dynamically inserted here -->
             </div>
         </section>
 
@@ -92,6 +225,31 @@
         <p>&copy; 2024 Phone Store. All rights reserved.</p>
     </footer>
 
-    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/v1/phones')
+                .then(response => response.json())
+                .then(phones => {
+                    // Get 3 random phones
+                    const randomPhones = phones.sort(() => 0.5 - Math.random()).slice(0, 3);
+                    const phonesGrid = document.getElementById('popularPhones');
+                    
+                    randomPhones.forEach(phone => {
+                        const phoneCard = document.createElement('div');
+                        phoneCard.className = 'phone-card';
+                        phoneCard.innerHTML = `
+                            <img src="${phone.imageUrl}" alt="${phone.brand} ${phone.model}">
+                            <h3>${phone.brand} ${phone.model}</h3>
+                            <p>$${phone.startingPrice}</p>
+                        `;
+                        phoneCard.addEventListener('click', () => {
+                            window.location.href = `product.html?id=${phone.uuid}`;
+                        });
+                        phonesGrid.appendChild(phoneCard);
+                    });
+                })
+                .catch(error => console.error('Error fetching phones:', error));
+        });
+    </script>
 </body>
 </html>
