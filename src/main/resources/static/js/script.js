@@ -75,9 +75,11 @@ function displayPhones(phonesToShow) {
 
     phonesGrid.innerHTML = phonesToShow.map(phone => `
         <div class="phone-card">
-            <img src="${phone.imageUrl || 'https://placehold.co/400x400?text=No+Image'}" 
-                 alt="${phone.brand} ${phone.model}" 
-                 class="phone-image">
+            <div class="phone-image-container">
+                <img src="${phone.imageUrl || 'https://placehold.co/400x400?text=No+Image'}" 
+                     alt="${phone.brand} ${phone.model}" 
+                     class="phone-image">
+            </div>
             <div class="phone-info">
                 <h3>${phone.brand} ${phone.model}</h3>
                 <p>${phone.description || 'No description available'}</p>
