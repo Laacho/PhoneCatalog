@@ -101,7 +101,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.1);
         }
         .trade-container {
             display: flex;
@@ -214,10 +214,14 @@
         </div>
         <div class="nav-container">
             <div class="logo">
-                <img src="/images/logo.png" alt="Phone Store Logo">
                 <a href="index.html">Phone Store</a>
             </div>
             <nav>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="catalog.html">Catalog</a></li>
@@ -253,8 +257,8 @@
             <div class="trade-container">
                 <div class="trade-content">
                     <h2>Trade In Your Phone</h2>
-                    <p>Get the best value for your old phone and upgrade to the latest model. Our trade-in program makes it easy and convenient to switch to a new device.</p>
-                    <a href="#" class="trade-button">Learn More</a>
+                    <p style="color:white;">Get the best value for your old phone and upgrade to the latest model. Our trade-in program makes it easy and convenient to switch to a new device.</p>
+                    <a href="#" class="trade-button">Coming soon</a>
                 </div>
                 <div class="trade-image-container">
                     <img src="/images/trade.png" alt="Trade In Your Phone" class="trade-image">
@@ -369,6 +373,35 @@
             document.addEventListener('click', function(e) {
                 if (!searchBar.contains(e.target)) {
                     searchResults.classList.remove('active');
+                }
+            });
+
+            // Hamburger menu functionality
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('nav ul');
+            const body = document.body;
+
+            hamburger.addEventListener('click', function() {
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+                body.classList.toggle('menu-open');
+            });
+
+            // Close menu when clicking a link
+            document.querySelectorAll('nav ul li a').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    body.classList.remove('menu-open');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                    body.classList.remove('menu-open');
                 }
             });
         });
