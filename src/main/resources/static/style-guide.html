@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Store - Style Guide</title>
+    <style>
+        :root {
+            --primary-color: #333;
+            --secondary-color: #666;
+            --accent-color: #007bff;
+            --background-color: #f8f9fa;
+            --white: #ffffff;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.4;
+            color: var(--primary-color);
+            margin: 0;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .style-section {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+
+        .color-box {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.8em;
+            text-align: center;
+        }
+
+        .component-example {
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .trade-button {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: var(--accent-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .phone-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            max-width: 200px;
+        }
+
+        .search-result-item {
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .grid-example {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .grid-item {
+            background: var(--background-color);
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Phone Store Style Guide</h1>
+
+    <section class="style-section">
+        <h2>Color Palette</h2>
+        <div class="color-palette">
+            <div class="color-box" style="background-color: var(--primary-color);">Primary<br>#333</div>
+            <div class="color-box" style="background-color: var(--secondary-color);">Secondary<br>#666</div>
+            <div class="color-box" style="background-color: var(--accent-color);">Accent<br>#007bff</div>
+            <div class="color-box" style="background-color: var(--background-color); color: #333;">Background<br>#f8f9fa</div>
+            <div class="color-box" style="background-color: var(--white); color: #333; border: 1px solid #ddd;">White<br>#ffffff</div>
+        </div>
+    </section>
+
+    <section class="style-section">
+        <h2>Typography</h2>
+        <div>
+            <h1>Heading 1 - 2.5em</h1>
+            <h2>Heading 2 - 2em</h2>
+            <h3>Heading 3 - 1.5em</h3>
+            <h4>Heading 4 - 1.2em</h4>
+            <p>Body Text - 1em</p>
+            <p style="font-size: 0.9em;">Small Text - 0.9em</p>
+            <p style="font-size: 0.8em;">Extra Small Text - 0.8em</p>
+        </div>
+    </section>
+
+    <section class="style-section">
+        <h2>Components</h2>
+        <div class="component-example">
+            <h3>Button</h3>
+            <a href="#" class="trade-button">Trade In</a>
+        </div>
+        <div class="component-example">
+            <h3>Card</h3>
+            <div class="phone-card">
+                <img src="./images/placeholder.png" alt="Phone" style="width: 100%; height: 120px; object-fit: contain;">
+                <h3>Phone Model</h3>
+                <p>$999.99</p>
+            </div>
+        </div>
+        <div class="component-example">
+            <h3>Search Result</h3>
+            <div class="search-result-item">
+                <img src="./images/placeholder.png" alt="Phone" style="width: 30px; height: 30px;">
+                <div>
+                    <h4>Phone Model</h4>
+                    <p>$999.99</p>
+                </div>
+            </div>
+        </div>
+        <div class="component-example">
+            <h3>Grid</h3>
+            <div class="grid-example">
+                <div class="grid-item">Item 1</div>
+                <div class="grid-item">Item 2</div>
+                <div class="grid-item">Item 3</div>
+            </div>
+        </div>
+    </section>
+</body>
+</html> 
